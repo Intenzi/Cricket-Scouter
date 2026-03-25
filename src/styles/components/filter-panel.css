@@ -15,7 +15,11 @@
   border: 1px solid rgba(77, 70, 53, 0.2);
   padding: var(--sp-6);
   border-radius: 0.75rem;
-  height: fit-content;
+  height: auto;
+  max-height: calc(100vh - var(--header-h) - var(--sp-12));
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--surface-container) transparent;
 }
 
 .filter-panel__header {
@@ -247,11 +251,14 @@
     left: 0;
     right: 0;
     bottom: 0;
+    width: 90vw;
+    height: calc(100vh - var(--header-h));
     z-index: 200;
     background: var(--surface-low);
     border-radius: 0;
     padding: var(--sp-8) var(--sp-6);
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .filter-panel.is-open {

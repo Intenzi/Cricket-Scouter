@@ -22,6 +22,17 @@ const FilterPanel = ({
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState(null); // 'country', 'position', 'tournament'
 
+  React.useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
   const hasActiveFilter = search || country || position || tournament;
 
   const handleTournamentToggle = (type) => {
