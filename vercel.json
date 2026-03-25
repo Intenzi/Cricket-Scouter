@@ -3,6 +3,14 @@
     {
       "source": "/api-proxy/:path*",
       "destination": "https://cricket.sportmonks.com/api/v2.0/:path*"
+    },
+    {
+      "source": "/players",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/players/:path*",
+      "destination": "/index.html"
     }
   ]
 }
