@@ -135,8 +135,10 @@ export function sanitizePlayerLite(raw) {
   return {
     id:          num(raw.id),
     country_id:  num(raw.country_id),
+    firstname:   str(raw.firstname),
     fullname:    str(raw.fullname),
     image_path:  str(raw.image_path),
+    updated_at:  str(raw.updated_at),
     position: {
       id:   num(raw.position?.id),
       name: str(raw.position?.name || 'Unknown'),

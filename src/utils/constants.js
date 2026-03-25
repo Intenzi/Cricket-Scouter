@@ -119,7 +119,7 @@ export const LOADER_TTL = 1 * 60 * 60 * 1000;
  *
  * @type {string}
  */
-export const BOOTSTRAP_CACHE_KEY = 'bootstrap';
+export const BOOTSTRAP_CACHE_KEY = 'bootstrap_v2';
 
 /**
  * IndexedDB cache key for loader metadata (last seen timestamp).
