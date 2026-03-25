@@ -24,6 +24,12 @@
 
 .filter-panel__header {
   display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.filter-panel__title-row {
+  display: flex;
   align-items: center;
   justify-content: space-between;
 }
@@ -210,6 +216,29 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
+.filter-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 150;
+  animation: simpleFadeIn var(--dur-normal) var(--ease-out);
+}
+
+.filter-close-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: var(--text-faint);
+  cursor: pointer;
+}
+
+.filter-close-btn:hover {
+  color: var(--primary);
+}
+
 @media (min-width: 64rem) {
   .filter-show-results-btn {
     display: none;
@@ -249,13 +278,14 @@
     position: fixed;
     top: var(--header-h);
     left: 0;
-    right: 0;
+    right: auto;
     bottom: 0;
     width: 90vw;
     height: calc(100vh - var(--header-h));
     z-index: 200;
     background: var(--surface-low);
     border-radius: 0;
+    box-shadow: 1rem 0 3rem rgba(0, 0, 0, 0.5);
     padding: var(--sp-8) var(--sp-6);
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
@@ -263,7 +293,7 @@
 
   .filter-panel.is-open {
     display: flex;
-    animation: fadeIn var(--dur-normal) var(--ease-out);
+    animation: slideInLeft var(--dur-normal) var(--ease-out);
   }
 
   .filter-toggle-btn {
@@ -278,6 +308,10 @@
 
   .filter-dropdown-trigger {
     pointer-events: none;
+  }
+
+  .filter-close-btn {
+    display: none;
   }
 
   .filter-dropdown-trigger .material-symbols-outlined {
@@ -295,7 +329,12 @@
   }
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes simpleFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

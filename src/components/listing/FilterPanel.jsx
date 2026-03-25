@@ -73,10 +73,27 @@ const FilterPanel = ({
         {isOpen ? 'Close Filters' : 'Filters'}
         {hasActiveFilter && <span className="filter-dot"></span>}
       </button>
+      
+      {isOpen && (
+        <div 
+          className="filter-overlay" 
+          onClick={() => setIsOpen(false)} 
+          aria-hidden="true" 
+        />
+      )}
 
       <aside className={`filter-panel ${isOpen ? 'is-open' : ''}`} aria-label="Player filters">
         <div className="filter-panel__header">
-          <h2 className="font-tungsten filter-panel__title">Filters</h2>
+          <div className="filter-panel__title-row">
+            <h2 className="font-tungsten filter-panel__title">Filters</h2>
+            <button 
+              className="filter-close-btn" 
+              onClick={() => setIsOpen(false)}
+              aria-label="Close filters"
+            >
+              <span className="material-symbols-outlined">close</span>
+            </button>
+          </div>
           {hasActiveFilter && (
             <button className="filter-clear-btn-text" onClick={onClearAll} type="button">
               Clear All
