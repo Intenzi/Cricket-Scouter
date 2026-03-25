@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api-proxy/(.*)",
+      "destination": "https://cricket.sportmonks.com/api/v2.0/$1"
+    }
+  ]
+}

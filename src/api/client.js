@@ -14,9 +14,7 @@ class ApiError extends Error {
 
 const TOKEN = import.meta.env.VITE_SPORTMONKS_TOKEN;
 // Use a local proxy in development to bypass CORS, otherwise use the direct URL
-const BASE_URL = import.meta.env.DEV
-  ? '/api-proxy'
-  : 'https://cricket.sportmonks.com/api/v2.0';
+const BASE_URL = '/api-proxy';
 
 /**
  * Common fetch helper with token and timeout.
