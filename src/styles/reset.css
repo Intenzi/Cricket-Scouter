@@ -1,0 +1,91 @@
+/**
+ * reset.css
+ *
+ * Minimal CSS reset — box-sizing, margin/padding resets, and sensible defaults.
+ * Follows the spirit of modern resets (Josh Comeau / Andy Bell) without being
+ * opinionated about anything that the Cricket Scouter design system handles via tokens.
+ *
+ * Imported exactly once: base.css pulls this in before everything else.
+ */
+
+/* 1. Use border-box on every element, including pseudo-elements. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* 2. Strip default margins and paddings. */
+*  {
+  margin: 0;
+  padding: 0;
+}
+
+/* 3. Root element: full height baseline. */
+html {
+  block-size: 100%;
+  -webkit-text-size-adjust: 100%;   /* Prevent font scale on orientation change (iOS) */
+  tab-size: 4;
+}
+
+/* 4. Body inherits height, no scroll overflow caused by rogue elements. */
+body {
+  min-block-size: 100%;
+  overflow-x: hidden;
+}
+
+/* 5. Improve media defaults. */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-inline-size: 100%;
+}
+
+/* 6. Remove built-in form typography styles. */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+/* 7. Avoid text overflows. */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+/* 8. Remove list decoration when lists are used for UI (restored per component). */
+ul,
+ol {
+  list-style: none;
+}
+
+/* 9. Button reset — consumers style from scratch. */
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* 10. Anchor reset — design-system link styles applied in base.css. */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* 11. Table reset. */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}

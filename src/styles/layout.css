@@ -1,0 +1,210 @@
+/**
+ * layout.css
+ *
+ * Structural layout rules for the Cricket Scouter shell:
+ *   - Skip link (accessibility)
+ *   - Header
+ *   - Sidebar (desktop always-on / mobile drawer)
+ *   - Main content wrapper
+ *   - Filter panel positioning
+ *
+ * All values are sourced exclusively from tokens.css custom properties.
+ * Mobile-first: base styles target narrow viewports, overrides at ≥48rem and ≥64rem.
+ */
+
+/* ─── Skip link ──────────────────────────────────────────────────────── */
+
+/**
+ * Visually hidden until focused — lets keyboard users jump past the header.
+ */
+.skip-link {
+  position: absolute;
+  top: var(--sp-2);
+  left: var(--sp-2);
+  z-index: 9999;
+  padding: var(--sp-2) var(--sp-4);
+  background: var(--primary);
+  color: var(--on-primary);
+  font-family: var(--font-label);
+  font-size: clamp(0.875rem, 1.3125vw, 0.875rem);
+  font-weight: 600;
+  border-radius: 0.25rem;
+  transform: translateY(-200%);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+/* ─── Header ─────────────────────────────────────────────────────────── */
+
+/**
+ * Fixed top bar — always in the viewport.
+ * Height matches --header-h token.
+ */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--sp-4);
+  background: var(--surface-low);
+  border-bottom: 0.0625rem solid var(--outline);
+  gap: var(--sp-3);
+}
+
+.header__logo {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4vw, 2.25rem); /* Increased size */
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.header__logo span {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/** Push nav items to the right */
+.header__spacer {
+  flex: 1;
+}
+
+/** Mobile hamburger — hidden on tablet+ */
+.header__menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--text-muted);
+  border-radius: 0.375rem;
+  transition: background var(--dur-fast), color var(--dur-fast);
+}
+
+.header__menu-btn:hover {
+  background: var(--surface-container);
+  color: var(--text);
+}
+
+@media (min-width: 48rem) {
+  .header__menu-btn {
+    display: none;
+  }
+}
+
+/* ─── App shell ──────────────────────────────────────────────────────── */
+
+/**
+ * Root layout wrapper that sits below the fixed header.
+ * On mobile: single column.
+ * On tablet+: sidebar + content flex row.
+ */
+.app-shell {
+  display: flex;
+  padding-top: var(--header-h);
+  min-height: 100vh;
+}
+
+/* ─── Main content wrapper ───────────────────────────────────────────── */
+
+/**
+ * The scrollable content area.
+ * Desktop: offset for always-open filter panel handled by listing page.
+ */
+.main-content {
+  flex: 1;
+  min-width: 0;
+  padding: var(--sp-6) var(--sp-4);
+}
+
+@media (min-width: 48rem) {
+  .main-content {
+    margin-left: 0;
+    padding: var(--sp-8) var(--sp-6);
+  }
+}
+
+@media (min-width: 64rem) {
+  .main-content {
+    padding: var(--sp-8);
+  }
+}
+
+/* ─── Listing page layout  ───────────────────────────────────────────── */
+
+/**
+ * Two-pane layout for the players listing page:
+ *   - Left: filter panel
+ *   - Right: directory content (sort + grid + pagination)
+ *
+ * Mobile: stacked (filter panel hidden / bottom sheet toggle).
+ * Desktop: side-by-side using CSS grid.
+ */
+.listing-layout {
+  display: block;
+}
+
+@media (min-width: 64rem) {
+  .listing-layout {
+    display: grid;
+    grid-template-columns: var(--filter-w) 1fr;
+    gap: var(--sp-8);
+    align-items: start;
+  }
+}
+
+/* ─── Directory content (right side) ─────────────────────────────────── */
+
+.directory-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-6);
+}
+
+/* ─── Directory header ────────────────────────────────────────────────── */
+
+.directory-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  margin-top: var(--sp-6);
+}
+
+.directory-header__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+  line-height: 1;
+}
+
+.directory-header__count {
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  color: rgba(222, 228, 225, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-weight: 600;
+  margin-top: 0.25rem;
+}
+
+/* ─── Keyframes ───────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+}

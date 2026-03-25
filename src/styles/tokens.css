@@ -1,0 +1,53 @@
+:root {
+  /* Surface scale (dark → light) */
+  --surface-lowest: #090f0e;
+  --surface-low: #171d1c;
+  --surface: #0f1513;
+  --surface-container: #1b2120;
+  --surface-high: #252b2a;
+  --surface-highest: #303635;
+
+  /* Brand */
+  --primary: #f2ca50;
+  --primary-dim: #d4af37;
+  --on-primary: #554300;
+
+  /* Text */
+  --text: #dee4e1;
+  --text-muted: rgba(222, 228, 225, 0.4);
+  --text-faint: rgba(222, 228, 225, 0.2);
+
+  /* Semantic states */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --outline: #4d4635;
+  --outline-solid: rgba(77, 70, 53, 0.8);
+
+  /* Typography */
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-label: 'Inter', sans-serif;
+
+  /* Spacing (Fluid) */
+  --sp-1: clamp(0.2rem, 0.5vw, 0.25rem);
+  --sp-2: clamp(0.4rem, 1vw, 0.5rem);
+  --sp-3: clamp(0.5rem, 1.5vw, 0.75rem);
+  --sp-4: clamp(0.75rem, 2.5vw, 1rem);
+  --sp-5: clamp(1rem, 3.5vw, 1.25rem);
+  --sp-6: clamp(1.2rem, 4vw, 1.5rem);
+  --sp-8: clamp(1.5rem, 5vw, 2rem);
+  --sp-10: clamp(2rem, 6vw, 2.5rem);
+  --sp-12: clamp(2.5rem, 8vw, 3rem);
+  --sp-16: clamp(3rem, 10vw, 4rem);
+
+  /* Layout */
+  --header-h: clamp(3.5rem, 8vh, 4.5rem);
+  --sidebar-w: 0rem;
+  --filter-w: clamp(16rem, 25vw, 18.75rem);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 150ms;
+  --dur-mid: 300ms;
+  --dur-slow: 500ms;
+}

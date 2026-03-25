@@ -1,0 +1,140 @@
+/**
+ * base.css
+ *
+ * Global base styles for Cricket Scouter.
+ * Import order:
+ *   1. reset.css  — strips browser defaults
+ *   2. tokens.css — design custom properties
+ *   3. This file  — type scale, body, scrollbar, focus ring, selection
+ *
+ * Only one file should be imported in main.jsx: this one.
+ * It handles the full cascade chain via @import.
+ */
+
+@import './reset.css';
+@import './tokens.css';
+
+/* ─── Body ───────────────────────────────────────────────────────────── */
+
+body {
+  font-family: var(--font-label);
+  background-color: var(--surface-lowest);
+  color: var(--text);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Headings ───────────────────────────────────────────────────────── */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  line-height: 1.1;
+  color: var(--text);
+}
+
+.font-tungsten {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+}
+
+/* ─── Type scale ─────────────────────────────────────────────────────── */
+
+p {
+  line-height: 1.65;
+}
+
+small {
+  font-size: clamp(0.8125rem, 1.21875vw, 0.8125rem);
+}
+
+/* ─── Focus ring ─────────────────────────────────────────────────────── */
+
+/**
+ * Unified, high-contrast focus ring.
+ * outline-offset separates it from the element edge.
+ * Using :focus-visible so the ring only shows on keyboard focus, not click.
+ */
+:focus-visible {
+  outline: 0.125rem solid var(--primary);
+  outline-offset: 0.1875rem;
+  border-radius: 0.125rem;
+}
+
+/* ─── Selection ──────────────────────────────────────────────────────── */
+
+::selection {
+  background: var(--primary-dim);
+  color: var(--on-primary);
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface-lowest);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--surface-container);
+  border-radius: 0.25rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--surface-high);
+}
+
+/* ─── Skip link (globally available) ────────────────────────────────── */
+
+/**
+ * The actual positioning and transition live in layout.css.
+ * This block provides the hide/show base so layout.css can build on it.
+ */
+.skip-link {
+  position: absolute;
+  top: var(--sp-2);
+  left: var(--sp-2);
+  z-index: 9999;
+  padding: var(--sp-2) var(--sp-4);
+  background: var(--primary);
+  color: var(--on-primary);
+  font-weight: 600;
+  font-size: clamp(0.875rem, 1.3125vw, 0.875rem);
+  border-radius: 0.25rem;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+/* ─── Visually hidden utility ────────────────────────────────────────── */
+
+/**
+ * Accessible screen-reader-only class.
+ * Element is invisible but remains in the accessibility tree.
+ */
+.sr-only {
+  position: absolute;
+  width: 0.0625rem;
+  height: 0.0625rem;
+  padding: 0;
+  margin: -0.0625rem;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
