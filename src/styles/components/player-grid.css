@@ -1,0 +1,31 @@
+/**
+ * player-grid.css
+ *
+ * Responsive grid for player cards.
+ * Mobile (default): 2 columns.
+ * Tablet: 3 columns.
+ * Desktop (>=1024px): Fixed to 4 columns to avoid odd orphan layouts.
+ */
+
+.player-grid {
+  display: grid;
+  /* Mobile default: 2 columns using auto-fill with a smaller minimum to fit narrow screens */
+  grid-template-columns: repeat(auto-fill, minmax(8.75rem, 1fr));
+  gap: var(--sp-4);
+}
+
+@media (min-width: 48rem) {
+  .player-grid {
+    /* Tablet: 3 columns */
+    grid-template-columns: repeat(auto-fill, minmax(11.25rem, 1fr));
+    gap: var(--sp-6);
+  }
+}
+
+@media (min-width: 64rem) {
+  .player-grid {
+    /* Desktop: Locked to exactly 4 columns for a streamlined look */
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--sp-8);
+  }
+}
