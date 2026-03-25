@@ -1,0 +1,294 @@
+/**
+ * filter-panel.css
+ *
+ * Side panel containing SearchBar, country checkboxes,
+ * position pill buttons, and the Clear All button.
+ *
+ * Updated for mobile-friendly dropdowns and collapsible sections.
+ */
+
+.filter-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-6);
+  background: var(--surface-low);
+  border: 1px solid rgba(77, 70, 53, 0.2);
+  padding: var(--sp-6);
+  border-radius: 0.75rem;
+  height: fit-content;
+}
+
+.filter-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.filter-panel__title {
+  color: var(--primary);
+  font-size: 1.5rem;
+  letter-spacing: 0.1em;
+  margin-bottom: 0;
+}
+
+/* ─── Filter sections ─────────────────────────────────────────────── */
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid rgba(77, 70, 53, 0.1);
+}
+
+.filter-dropdown-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sp-3) 0;
+  background: none;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+  text-align: left;
+}
+
+.filter-dropdown-trigger .material-symbols-outlined {
+  color: var(--text-faint);
+  transition: transform var(--dur-normal);
+}
+
+.filter-dropdown-trigger.is-active .material-symbols-outlined {
+  transform: rotate(180deg);
+}
+
+.filter-section {
+  display: none;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding-bottom: var(--sp-4);
+}
+
+.filter-section.is-expanded {
+  display: flex;
+  animation: slideDown var(--dur-normal) var(--ease-out);
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.filter-section__legend {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(222, 228, 225, 0.6);
+}
+
+/* ─── Country filter list ─────────────────────────────────────────────── */
+
+.country-filter {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  max-height: 15rem;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--surface-container) transparent;
+}
+
+.country-filter__item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-2);
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: background var(--dur-fast);
+}
+
+.country-filter__item:hover {
+  background: var(--surface-high);
+}
+
+.country-filter__checkbox {
+  width: 1.125rem;
+  height: 1.125rem;
+  accent-color: var(--primary);
+  flex-shrink: 0;
+}
+
+.country-filter__label {
+  font-family: var(--font-label);
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  flex: 1;
+}
+
+.country-filter__count {
+  font-size: 0.75rem;
+  color: var(--text-faint);
+}
+
+/* ─── Position pills ──────────────────────────────────────────────────── */
+
+.position-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+
+.position-pill {
+  padding: 0.5rem 0.875rem;
+  background: transparent;
+  border: 1px solid rgba(77, 70, 53, 0.4);
+  font-family: var(--font-label);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: rgba(222, 228, 225, 0.5);
+  cursor: pointer;
+  transition: all var(--dur-fast);
+  text-transform: uppercase;
+}
+
+.position-pill:hover {
+  border-color: var(--primary);
+  color: var(--text);
+}
+
+.position-pill[aria-pressed='true'] {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--on-primary);
+}
+
+/* ─── Buttons ────────────────────────────────────────────────── */
+
+.filter-clear-btn {
+  margin-top: var(--sp-4);
+  padding: var(--sp-3);
+  background: rgba(242, 202, 80, 0.1);
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all var(--dur-fast);
+}
+
+.filter-clear-btn:hover {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+.filter-clear-btn-text {
+  background: none;
+  border: none;
+  color: var(--text-faint);
+  font-size: 0.75rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.filter-show-results-btn {
+  margin-top: auto;
+  padding: 1rem;
+  background: var(--primary);
+  color: var(--on-primary);
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+@media (min-width: 64rem) {
+  .filter-show-results-btn {
+    display: none;
+  }
+}
+
+/* ─── Mobile Overrides ────────────────────────────────────────────── */
+
+.filter-toggle-btn {
+  display: flex;
+  position: sticky;
+  top: calc(var(--header-h) + var(--sp-4));
+  z-index: 50;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: 0.75rem 1.25rem;
+  background: var(--surface-highest);
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  border-radius: 2rem;
+  font-weight: 700;
+  font-size: 0.875rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  margin-bottom: var(--sp-6);
+}
+
+.filter-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  background: var(--primary);
+  border-radius: 50%;
+}
+
+@media (max-width: 63.9375rem) {
+  .filter-panel {
+    display: none;
+    position: fixed;
+    top: var(--header-h);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 200;
+    background: var(--surface-low);
+    border-radius: 0;
+    padding: var(--sp-8) var(--sp-6);
+    overflow-y: auto;
+  }
+
+  .filter-panel.is-open {
+    display: flex;
+    animation: fadeIn var(--dur-normal) var(--ease-out);
+  }
+
+  .filter-toggle-btn {
+    display: flex;
+  }
+}
+
+@media (min-width: 64rem) {
+  .filter-toggle-btn {
+    display: none;
+  }
+
+  .filter-dropdown-trigger {
+    pointer-events: none;
+  }
+
+  .filter-dropdown-trigger .material-symbols-outlined {
+    display: none;
+  }
+
+  .filter-section {
+    display: flex;
+    margin-bottom: var(--sp-4);
+  }
+
+  .filter-panel {
+    position: sticky;
+    top: calc(var(--header-h) + var(--sp-8));
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

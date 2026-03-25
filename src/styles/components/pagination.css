@@ -1,0 +1,92 @@
+/**
+ * pagination.css
+ *
+ * Pagination controls for the player listing page.
+ * Desktop: full page button row with ellipsis.
+ * Mobile: simplified prev/next + "Page N of M" text.
+ */
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-1);
+  flex-wrap: wrap;
+}
+
+.pagination__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.25rem;
+  height: 2.25rem;
+  padding: 0 var(--sp-2);
+  background: var(--surface-high);
+  border: 0.0625rem solid var(--outline);
+  border-radius: 0.375rem;
+  font-family: var(--font-label);
+  font-size: clamp(0.875rem, 1.3125vw, 0.875rem);
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background var(--dur-fast), color var(--dur-fast), border-color var(--dur-fast);
+}
+
+.pagination__btn:hover:not(:disabled):not([aria-current='page']) {
+  background: var(--surface-highest);
+  color: var(--text);
+}
+
+.pagination__btn[aria-current='page'] {
+  background: rgba(242, 202, 80, 0.12);
+  border-color: var(--primary-dim);
+  color: var(--primary);
+  font-weight: 700;
+  cursor: default;
+}
+
+.pagination__btn:disabled,
+.pagination__btn[aria-disabled='true'] {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.pagination__ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  color: var(--text-faint);
+  font-size: clamp(0.875rem, 1.3125vw, 0.875rem);
+  pointer-events: none;
+}
+
+/* Mobile: hide page number buttons, show only prev/next + info */
+.pagination__mobile-info {
+  display: none;
+  font-family: var(--font-label);
+  font-size: clamp(0.8125rem, 1.21875vw, 0.8125rem);
+  color: var(--text-muted);
+}
+
+.pagination__btn--skip {
+  display: none;
+}
+
+@media (max-width: 47.9375rem) {
+  .pagination__btn--skip {
+    display: inline-flex;
+  }
+
+  .pagination__pages {
+    display: none;
+  }
+
+  .pagination__mobile-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 4rem;
+  }
+}

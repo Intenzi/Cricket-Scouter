@@ -1,0 +1,51 @@
+/**
+ * filter-pill.css
+ *
+ * Active filter pills displayed in the FilterPillRow below the sort controls.
+ * Each pill shows the active filter value with a dismiss (×) button.
+ */
+
+.filter-pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  min-height: 1.75rem; /* reserve space even when empty */
+}
+
+.filter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  background: rgba(242, 202, 80, 0.1);
+  border: 1px solid rgba(242, 202, 80, 0.3);
+  border-radius: 0;
+  font-family: var(--font-label);
+  font-size: 0.625rem;
+  font-weight: 700;
+  color: var(--primary);
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.filter-pill__label {
+  letter-spacing: 0.05em;
+}
+
+.filter-pill__dismiss {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  color: var(--primary);
+  font-size: 0.75rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: opacity var(--dur-fast);
+  opacity: 0.6;
+}
+
+.filter-pill__dismiss:hover {
+  opacity: 1;
+}
