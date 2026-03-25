@@ -1,0 +1,65 @@
+/**
+ * stats-banner.css
+ *
+ * Four-tile key stats banner shown at the top of the player detail right column.
+ * Tiles display: Matches, Runs or Wickets (adapts by position), Average, Strike Rate / Economy.
+ */
+
+.stats-banner {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--sp-3);
+}
+
+@media (min-width: 48rem) {
+  .stats-banner {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.stats-tile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  padding: var(--sp-4);
+  background: var(--surface-container);
+  border: 0.0625rem solid var(--outline);
+  border-radius: 0.5rem;
+  text-align: center;
+}
+
+.stats-tile__value {
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 4vw, 2rem);
+  font-weight: 700;
+  color: var(--primary);
+  line-height: 1;
+}
+
+.stats-tile__label {
+  font-family: var(--font-label);
+  font-size: clamp(0.6875rem, 1.03125vw, 0.6875rem);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+/* Skeleton variant for loading state */
+.stats-tile--skeleton .stats-tile__value {
+  height: 2rem;
+  border-radius: 0.25rem;
+  background: var(--surface-high);
+  color: transparent;
+  width: 60%;
+  margin: 0 auto;
+}
+
+.stats-tile--skeleton .stats-tile__label {
+  height: 0.625rem;
+  border-radius: 0.25rem;
+  background: var(--surface-high);
+  color: transparent;
+  width: 80%;
+  margin: 0 auto;
+}
