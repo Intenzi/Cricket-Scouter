@@ -1,0 +1,226 @@
+/**
+ * career-table.css
+ *
+ * Career breakdown table — one row per cricket format (Test / ODI / T20I / T20).
+ * Horizontally scrollable on mobile to handle wide column sets.
+ */
+
+.career-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.career-section__title {
+  font-family: var(--font-label);
+  font-size: clamp(0.6875rem, 1.03125vw, 0.6875rem);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.career-table-wrap {
+  overflow-x: auto;
+  border: 0.0625rem solid var(--outline);
+  border-radius: 0.5rem;
+}
+
+.career-table {
+  width: 100%;
+  min-width: 33.75rem;
+  border-collapse: collapse;
+  font-family: var(--font-label);
+  font-size: clamp(0.8125rem, 1.21875vw, 0.8125rem);
+}
+
+.career-table th {
+  padding: 0;
+  background: var(--surface-low);
+  border-bottom: 1px solid var(--outline);
+  white-space: nowrap;
+  position: relative;
+  transition: background var(--dur-fast) var(--ease-out);
+}
+
+.career-table th:hover,
+.career-table th:focus-within {
+  background: var(--surface-container);
+  z-index: 10; /* Ensure tooltip sits above the data rows */
+}
+
+.career-table__header-btn {
+  width: 100%;
+  height: 100%;
+  padding: var(--sp-4) var(--sp-3);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  background: none;
+  border: none;
+  font-family: var(--font-label);
+  font-size: clamp(0.75rem, 1.125vw, 0.75rem);
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: help;
+  transition: color var(--dur-fast) var(--ease-out);
+  outline: none;
+}
+
+.career-table th:first-child .career-table__header-btn {
+  justify-content: flex-start;
+}
+
+.career-table th:hover .career-table__header-btn,
+.career-table__header-btn:focus {
+  color: var(--primary);
+}
+
+/** The tooltip engine (downward version) */
+.career-table__tooltip {
+  position: absolute;
+  top: 100%; /* Show below header */
+  left: 50%;
+  transform: translateX(-50%) translateY(-0.5rem);
+  padding: 0.5rem 0.75rem;
+  background: #000;
+  color: #fff;
+  font-family: var(--font-label);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  border-radius: 0.25rem;
+  border: 1px solid var(--outline-solid);
+  white-space: nowrap;
+  box-shadow: 0 0.25rem 0.75rem rgba(0,0,0,0.5);
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--dur-fast) var(--ease-out);
+  z-index: 100;
+}
+
+/* Tooltip arrow (top-aligned) */
+.career-table__tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: 100%; /* Point up to the header */
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 0.25rem;
+  border-style: solid;
+  border-color: transparent transparent var(--outline-solid) transparent;
+}
+
+.career-table th:hover .career-table__tooltip,
+.career-table th:focus-within .career-table__tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0.5rem);
+}
+
+/* Edge case: First column (Format) - align left */
+.career-table th:first-child .career-table__tooltip {
+  left: 0;
+  transform: translateX(0) translateY(-0.5rem);
+}
+
+.career-table th:first-child:hover .career-table__tooltip,
+.career-table th:first-child:focus-within .career-table__tooltip {
+  transform: translateX(0) translateY(0.5rem);
+}
+
+.career-table th:first-child .career-table__tooltip::after {
+  left: 1.5rem;
+  transform: none;
+}
+
+/* Edge case: Right-aligned columns - align right */
+.career-table th.u-text-right .career-table__tooltip {
+  left: auto;
+  right: 0;
+  transform: translateX(0) translateY(-0.5rem);
+}
+
+.career-table th.u-text-right:hover .career-table__tooltip,
+.career-table th.u-text-right:focus-within .career-table__tooltip {
+  transform: translateX(0) translateY(0.5rem);
+}
+
+.career-table th.u-text-right .career-table__tooltip::after {
+  left: auto;
+  right: 1.5rem;
+  transform: none;
+}
+
+.career-table th:first-child {
+  text-align: left;
+}
+
+.career-table td {
+  padding: var(--sp-3);
+  color: var(--text-muted);
+  text-align: right;
+  border-bottom: 0.0625rem solid var(--outline);
+  white-space: nowrap;
+}
+
+.career-table td:first-child {
+  text-align: left;
+  font-weight: 700;
+  color: var(--text);
+  font-size: clamp(0.875rem, 1.3125vw, 0.875rem);
+}
+
+.career-table tr:last-child td {
+  border-bottom: none;
+}
+
+.career-table tbody tr:hover td {
+  background: var(--surface-high);
+}
+
+/* Format type badge */
+.career-table__format {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.125rem var(--sp-2);
+  border-radius: 0.25rem;
+  background: var(--surface-highest);
+  font-family: var(--font-label);
+  font-size: clamp(0.75rem, 1.125vw, 0.75rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--text);
+}
+
+/* Utilities for column alignment */
+.career-table .u-text-left { text-align: left; }
+.career-table .u-text-right { text-align: right; }
+
+.career-table__skeleton-bar {
+  height: 0.75rem;
+  border-radius: 0.25rem;
+  background: var(--surface-high);
+}
+
+.career-table__skeleton-bar--large {
+  width: 3.75rem;
+}
+
+.career-table__skeleton-bar--small {
+  width: 1.875rem;
+}
+
+.u-margin-l-auto {
+  margin-left: auto;
+}
+
+.career-table__empty-msg {
+  font-size: clamp(0.875rem, 1.3125vw, 0.875rem);
+  color: var(--text-faint);
+  padding: var(--sp-4) 0;
+}

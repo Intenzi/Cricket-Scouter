@@ -1,0 +1,233 @@
+/**
+ * scouting-radar.css
+ *
+ * Styles for the Spider Chart (Radar) and Performance Badges.
+ * Modern glassmorphism look with primary gold accents.
+ */
+
+.scouting-radar {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-6);
+  padding: var(--sp-8) var(--sp-6);
+  border: 0.0625rem solid var(--outline);
+  border-radius: 0.625rem;
+  background: var(--surface-low);
+  margin-top: var(--sp-2);
+}
+
+@media (min-width: 48rem) {
+  .scouting-radar {
+    grid-template-columns: auto 1fr;
+    align-items: center;
+  }
+}
+
+.scouting-radar__chart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--surface-container);
+  border-radius: 0.5rem;
+  padding: var(--sp-4);
+  border: 1px solid var(--outline-solid);
+  position: relative; /* Container for absolute HTML labels */
+}
+
+/** SVG Chart Styles */
+.radar-grid {
+  fill: none;
+  stroke: var(--outline-solid);
+  stroke-width: 1px;
+  stroke-dasharray: 2 4;
+}
+
+.radar-axis {
+  stroke: var(--outline);
+  stroke-width: 1px;
+}
+
+.radar-data {
+  fill: rgba(242, 202, 80, 0.2);
+  stroke: var(--primary);
+  stroke-width: 2px;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 4px rgba(242, 202, 80, 0.4));
+}
+
+.radar-label-wrap {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: help;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.radar-label {
+  font-family: var(--font-label);
+  font-size: 0.625rem;
+  font-weight: 700;
+  color: var(--text-faint);
+  letter-spacing: 0.1em;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.radar-label-wrap:hover .radar-label,
+.radar-label-wrap:focus .radar-label {
+  color: var(--primary);
+}
+
+/** Tooltip for Radar Labels */
+.scouting-radar__tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(0.5rem);
+  padding: 0.5rem 0.75rem;
+  background: #000;
+  color: #fff;
+  font-family: var(--font-label);
+  font-size: 0.625rem;
+  font-weight: 500;
+  border-radius: 0.25rem;
+  border: 1px solid var(--outline-solid);
+  white-space: normal;
+  width: max-content;
+  max-width: 12rem;
+  text-align: center;
+  box-shadow: 0 0.25rem 0.75rem rgba(0,0,0,0.5);
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--dur-fast) var(--ease-out);
+  z-index: 100;
+}
+
+.radar-label-wrap:hover .scouting-radar__tooltip,
+.radar-label-wrap:focus-within .scouting-radar__tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(-0.25rem);
+}
+
+/** Sidebar Content */
+.scouting-radar__sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.sidebar-title {
+  font-family: var(--font-label);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  opacity: 0.6;
+}
+
+.badge-list {
+  display: flex;
+  gap: var(--sp-2);
+  flex-wrap: wrap;
+}
+
+.perform-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.375rem 0.75rem;
+  background: var(--surface-highest);
+  border: none;
+  border-left: 0.1875rem solid var(--badge-color, var(--primary));
+  border-radius: 0.25rem;
+  font-family: var(--font-label);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.04em;
+  box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.1);
+  cursor: help;
+  position: relative;
+  outline: none;
+  transition: background var(--dur-fast) var(--ease-out);
+}
+
+.perform-badge:hover,
+.perform-badge:focus {
+  background: var(--surface-container);
+}
+
+/** Tooltip for Badges */
+.perform-badge__tooltip {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-0.5rem);
+  padding: 0.5rem 0.75rem;
+  background: #000;
+  color: #fff;
+  font-family: var(--font-label);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  border-radius: 0.25rem;
+  border: 1px solid var(--outline-solid);
+  white-space: normal;
+  width: max-content;
+  max-width: 14rem;
+  text-align: center;
+  box-shadow: 0 0.25rem 0.75rem rgba(0,0,0,0.5);
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--dur-fast) var(--ease-out);
+  z-index: 100;
+}
+
+.perform-badge:hover .perform-badge__tooltip,
+.perform-badge:focus-within .perform-badge__tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0.5rem);
+}
+
+.scouting-empty {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  padding: var(--sp-4);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed var(--outline);
+  border-radius: 0.375rem;
+  width: 100%;
+}
+
+.scouting-empty__text {
+  font-family: var(--font-label);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.scouting-empty__sub {
+  font-family: var(--font-label);
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.sidebar-desc {
+  font-family: var(--font-label);
+  font-size: 0.8125rem;
+  color: var(--text-faint);
+  line-height: 1.5;
+  font-style: italic;
+}

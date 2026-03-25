@@ -1,0 +1,85 @@
+/**
+ * team-history.css
+ *
+ * Career formats and activity indicators.
+ */
+
+.team-history {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-6);
+  margin-top: var(--sp-2);
+}
+
+.team-history__title {
+  font-family: var(--font-label);
+  font-size: clamp(0.6875rem, 1.03125vw, 0.6875rem);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted); /* Slightly brighter for section headers */
+  opacity: 0.4;
+  margin-bottom: var(--sp-2);
+}
+
+.team-history__list {
+  display: flex;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+}
+
+.team-history__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: 0.375rem 0.875rem;
+  background: var(--surface-highest);
+  border: 1px solid var(--outline);
+  border-radius: 0.375rem;
+  font-family: var(--font-label);
+  font-size: clamp(0.75rem, 1.125vw, 0.75rem);
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  transition: all var(--dur-fast) var(--ease-out);
+  cursor: default;
+}
+
+.team-history__tag:hover {
+  background: var(--surface-container);
+  border-color: var(--outline-solid);
+  color: var(--text);
+  transform: translateY(-1px);
+}
+
+.team-history__tag--national {
+  border-color: rgba(242, 202, 80, 0.3); /* Transparent gold */
+  color: var(--primary);
+  background: rgba(242, 202, 80, 0.05);
+}
+
+.team-history__tag--national:hover {
+  border-color: var(--primary);
+  background: rgba(242, 202, 80, 0.1);
+}
+
+.team-history__national-badge {
+  font-size: 0.625rem;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: -0.25rem;
+}
+
+.team-history__skeleton-bar {
+  height: 2rem;
+  border-radius: 0.375rem;
+  background: var(--surface-high);
+}
+
+.team-history__skeleton-w-60 { width: 4.5rem; }
+.team-history__skeleton-w-48 { width: 3.5rem; }
+.team-history__skeleton-w-56 { width: 4rem; }
+.team-history__skeleton-w-40 { width: 3rem; }
+
