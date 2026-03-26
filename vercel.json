@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api-proxy/:path*",
-      "destination": "https://cricket.sportmonks.com/api/v2.0/:path*"
+      "destination": "/api/proxy"
     },
     {
       "source": "/players",
