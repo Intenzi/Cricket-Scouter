@@ -11,12 +11,12 @@
 
 import 'dotenv/config';
 
-const TOKEN = process.env.VITE_SPORTMONKS_TOKEN;
+const TOKEN = process.env.SPORTMONKS_TOKEN;
 const API_URL = `https://cricket.sportmonks.com/api/v2.0/players?api_token=${TOKEN}&include=career`;
 
 async function main() {
   if (!TOKEN) {
-    console.error('Error: VITE_SPORTMONKS_TOKEN is missing in .env');
+    console.error('Error: SPORTMONKS_TOKEN is missing in .env');
     process.exit(1);
   }
 

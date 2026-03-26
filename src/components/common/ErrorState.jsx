@@ -35,7 +35,7 @@ const ERROR_CONFIGS = {
   auth: {
     title: 'Authentication failed',
     copy:  import.meta.env.DEV
-      ? 'API key invalid — check your .env file (VITE_SPORTMONKS_TOKEN).'
+      ? 'API key invalid — check your .env file (SPORTMONKS_TOKEN).'
       : 'Something went wrong. Please reload the page.',
     action: 'Reload page',
   },
