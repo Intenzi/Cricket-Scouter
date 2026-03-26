@@ -48,7 +48,9 @@ export function usePlayerDetail(id) {
       // 1. Validation check
       if (!numericId || !Number.isFinite(numericId)) {
         if (isMounted.current) {
-          setError(new Error('Invalid player ID'));
+          const err = new Error('Invalid player ID');
+          err.status = 404;
+          setError(err);
           setCareerLoading(false);
         }
         return;
