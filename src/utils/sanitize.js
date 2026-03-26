@@ -10,7 +10,7 @@
  *   - In DEV mode, sanitizeCareer() logs a warning if the shape is unexpected.
  *
  * Primitive guards:
- *   str(v)  → string: trims, strips < > " ' characters, returns '' if not a string
+ *   str(v)  → string: trims, strips < > " characters, returns '' if not a string
  *   num(v)  → number: returns Number(v) if finite, null otherwise
  *   bool(v) → Boolean coercion
  *   arr(v)  → returns v if Array.isArray(v), else []
@@ -18,13 +18,13 @@
 
 /**
  * Coerces `v` to a trimmed, stripped string.
- * Strips < > " ' to prevent accidental XSS from API data injected into the DOM.
+ * Strips < > " to prevent accidental XSS from API data injected into the DOM.
  *
  * @param {*} v
  * @returns {string}
  */
 export const str = (v) =>
-  typeof v === 'string' ? v.trim().replace(/[<>"']/g, '') : '';
+  typeof v === 'string' ? v.trim().replace(/[<>"]/g, '') : '';
 
 /**
  * Coerces `v` to a finite number, or returns null.
