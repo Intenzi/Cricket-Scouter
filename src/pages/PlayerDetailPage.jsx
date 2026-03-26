@@ -65,6 +65,11 @@ const PlayerDetailPage = () => {
     }
   };
 
+  // Scroll to the top of the page whenever a new player page is visited
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
+
   useEffect(() => {
     if (player?.fullname) {
       const title = `${player.fullname} — Cricket Scouter Scouting Profile`;
