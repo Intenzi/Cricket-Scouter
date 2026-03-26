@@ -86,7 +86,7 @@ export function deriveSlice({
   if (search) {
     const term = search.toLowerCase();
     result = result.filter(
-      (p) => (p.fullname || '').toLowerCase().includes(term)
+      (p) => (p.lastname || '').toLowerCase().includes(term)
     );
   }
 
