@@ -54,7 +54,9 @@ export async function client(endpoint, options = {}, retryCount = 0) {
 
     // Retryable status codes (5xx, 408)
     if ([408, 500, 502, 503, 504].includes(response.status) && retryCount === 0) {
-      console.warn(`Transient error ${response.status}. Retrying once...`);
+      if (import.meta.env.DEV) {
+        console.warn(`Transient error ${response.status}. Retrying once...`);
+      }
       await new Promise((res) => setTimeout(res, 1000));
       return client(endpoint, options, retryCount + 1);
     }

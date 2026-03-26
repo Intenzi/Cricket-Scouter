@@ -43,7 +43,9 @@ const SyncGate = () => {
           }
         }
       } catch (err) {
-        console.warn('[SyncGate] Cache read failed, proceeding to full sync.', err);
+        if (import.meta.env.DEV) {
+          console.warn('[SyncGate] Cache read failed, proceeding to full sync.', err);
+        }
       } finally {
         setChecking(false);
       }

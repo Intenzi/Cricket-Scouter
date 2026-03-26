@@ -121,7 +121,9 @@ const SyncScreen = ({ onDone }) => {
         setTimeout(onDone, 800);
 
       } catch (err) {
-        console.error('[SyncScreen] Ritual failed:', err);
+        if (import.meta.env.DEV) {
+          console.error('[SyncScreen] Ritual failed:', err);
+        }
         stopFactRotation();
         setErrorMsg('Scouting sync failed. Check connection or API status.');
         setPhase('error');
