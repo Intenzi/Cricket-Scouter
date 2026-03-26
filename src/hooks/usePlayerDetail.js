@@ -12,7 +12,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { fetchPlayerById } from '../api/players';
-import { readCache } from '../utils/idb';
+import { readCache, writeCache } from '../utils/idb';
 import {
   getStore,
   getDetailCache,
@@ -20,7 +20,7 @@ import {
 } from '../store/players';
 import { sanitizePlayer } from '../utils/sanitize';
 import { DETAIL_CACHE_TTL } from '../utils/constants';
-import { writeCache } from '../utils/idb';
+
 
 /**
  * Fetches and progressively enriches a player record.
