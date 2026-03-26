@@ -3,14 +3,11 @@
   "trailingSlash": false,
   "rewrites": [
     {
-      "source": "/api-proxy/:path*",
-      "destination": "/api/proxy?proxyPath=:path*"
+      "source": "/api-proxy/(.*)",
+      "destination": "/api/proxy"
     },
     {
-      "handle": "filesystem"
-    },
-    {
-      "source": "/(.*)",
+      "source": "/((?!api/|api-proxy/).*)",
       "destination": "/index.html"
     }
   ]

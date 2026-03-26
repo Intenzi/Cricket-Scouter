@@ -22,12 +22,9 @@ export default async function handler(req, res) {
   // Base URL for SportMonks v2
   const SPORTMONKS_BASE = 'https://cricket.sportmonks.com/api/v2.0/';
 
-  // Get the target path. In Vercel deployments, we'll pass this via a query param in vercel.json
-  // Fallback to stripping the prefix from the URL for local testing/direct calls
-  let targetPath = req.query.proxyPath || req.url.replace(/^\/api-proxy\/?/, '');
-  
-  // Ensure we don't have leading slashes that might cause double-slashes in the final URL
-  targetPath = targetPath.replace(/^\//, '');
+  // Strip the prefix /api-proxy from the incoming URL to get the target path
+  // E.g. /api-proxy/players -> players
+  const targetPath = req.url.replace(/^\/api-proxy\/?/, '');
 
   const targetUrl = new URL(targetPath, SPORTMONKS_BASE);
 
@@ -40,11 +37,9 @@ export default async function handler(req, res) {
   }
   targetUrl.searchParams.set('api_token', apiToken);
 
-  // Preserve existing query params from the client, skipping the internal proxyPath
+  // Preserve existing query params from the client
   incomingUrl.searchParams.forEach((value, key) => {
-    if (key !== 'proxyPath') {
-      targetUrl.searchParams.append(key, value);
-    }
+    targetUrl.searchParams.append(key, value);
   });
 
   try {
