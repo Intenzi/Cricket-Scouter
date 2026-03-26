@@ -35,37 +35,35 @@ const PlayerHero = ({ player, country }) => {
 
   const handleShare = () => {
     const shareUrl = window.location.href;
+    const shareText = `Check out ${player.fullname}'s scouting profile on Cricket Scouter! ${shareUrl}`;
     
     const triggerCopyEffect = () => {
       setShowCopied(true);
       setTimeout(() => setShowCopied(false), 2000);
     };
 
-    if (navigator.share) {
-      navigator.share({
-        title: player.fullname,
-        text: `Check out ${player.fullname}'s scouting profile on Cricket Scouter!`,
-        url: shareUrl,
-      })
-      .then(triggerCopyEffect)
-      .catch((err) => {
-        // User cancelling the share sheet is caught here; we shouldn't show "Copied" in that case
-        if (err.name !== 'AbortError' && import.meta.env.DEV) {
-          console.error('[handleShare] Share failed:', err);
-        }
-      });
-    } else if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(shareUrl)
+    // Always try to copy the text to the clipboard explicitly
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(shareText)
         .then(triggerCopyEffect)
         .catch((err) => {
           if (import.meta.env.DEV) {
             console.error('[handleShare] Clipboard copy failed:', err);
           }
         });
-    } else {
-      if (import.meta.env.DEV) {
-        console.warn('[handleShare] Sharing and Clipboard API are both unavailable.');
-      }
+    }
+
+    // Additionally, use native share if available (e.g. mobile devices)
+    if (navigator.share) {
+      navigator.share({
+        title: player.fullname,
+        text: `Check out ${player.fullname}'s scouting profile on Cricket Scouter!`,
+        url: shareUrl,
+      }).catch((err) => {
+        if (err.name !== 'AbortError' && import.meta.env.DEV) {
+          console.error('[handleShare] Native share failed:', err);
+        }
+      });
     }
   };
 
