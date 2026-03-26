@@ -11,7 +11,12 @@ import { fetchCountries, fetchTeams } from '../../api/bootstrap';
 import { sanitizePlayerLite, sanitizeCountry, sanitizeTeam } from '../../utils/sanitize';
 import { readCache, writeCache } from '../../utils/idb';
 import { setStore } from '../../store/players';
-import { CRICKET_FACTS, BOOTSTRAP_CACHE_KEY, BOOTSTRAP_CACHE_TTL, LOADER_CACHE_KEY } from '../../utils/constants';
+import {
+  CRICKET_FACTS,
+  BOOTSTRAP_CACHE_KEY,
+  BOOTSTRAP_CACHE_TTL,
+  LOADER_CACHE_KEY,
+} from '../../utils/constants';
 import '../../styles/components/sync-screen.css';
 
 /**
@@ -23,15 +28,20 @@ const SyncScreen = ({ onDone }) => {
   const [percent, setPercent] = useState(0);
   const [task, setTask] = useState('Establishing Secure Handshake...');
   const [currentFact, setCurrentFact] = useState(0);
+  const [isDone, setIsDone] = useState(false);
   const factIntervalRef = useRef(null);
 
   useEffect(() => {
-    // Basic simulation start
+    // Simple grow-and-wait simulation
     const int = setInterval(() => {
-      setPercent(prev => (prev < 30 ? prev + 1 : prev));
+      setPercent((prev) => {
+        if (prev < 79) return prev + 1;
+        if (isDone && prev < 100) return prev + 5; // Fast finish
+        return prev >= 100 ? 100 : prev;
+      });
     }, 100);
     return () => clearInterval(int);
-  }, []);
+  }, [isDone]);
 
   const factRotation = useCallback(() => {
     setCurrentFact((prev) => (prev + 1) % CRICKET_FACTS.length);
@@ -53,39 +63,42 @@ const SyncScreen = ({ onDone }) => {
     async function runRitual() {
       try {
         const cached = await readCache(BOOTSTRAP_CACHE_KEY);
-        const isDataFresh = cached && cached.players && (Date.now() - cached.fetchedAt < BOOTSTRAP_CACHE_TTL);
+        const isDataFresh =
+          cached && cached.players && Date.now() - cached.fetchedAt < BOOTSTRAP_CACHE_TTL;
 
         if (isDataFresh) {
           /** --- Ritual Only: Data is fresh, just do the 1.2s cool animation --- */
           setTask('Record Verified - Finalizing Handshake...');
-          
-          // Fast-forward simulation
-          let p = 30;
+
+          // Fast-forward simulation from current point to 100
           const snapInt = setInterval(() => {
-            p += 5;
-            setPercent(prev => Math.min(prev + 5, 100));
-            if (p >= 100) {
-              clearInterval(snapInt);
-              setTask('Integrity Check Complete.');
-              
-              // Record the ritual seen
-              writeCache(LOADER_CACHE_KEY, { lastSeen: Date.now() });
-              
-              setStore({
-                players: cached.players,
-                countries: cached.countries,
-                teams: cached.teams,
-              });
-              
-              setTimeout(onDone, 800);
-            }
+            setPercent((prev) => {
+              const next = prev + 5;
+              if (next >= 100) {
+                clearInterval(snapInt);
+                setTask('Integrity Check Complete.');
+
+                // Record the ritual seen
+                writeCache(LOADER_CACHE_KEY, { lastSeen: Date.now() });
+
+                setStore({
+                  players: cached.players,
+                  countries: cached.countries,
+                  teams: cached.teams,
+                });
+
+                setTimeout(onDone, 800);
+                return 100;
+              }
+              return next;
+            });
           }, 40);
           return;
         }
 
         /** --- Full Sync: Stale data or first load, do the API fetch --- */
         setTask('Fetching Global Player Registry (API)...');
-        
+
         const [playerRes, countryRes, teamRes] = await Promise.allSettled([
           fetchAllPlayers(),
           fetchCountries(),
@@ -112,14 +125,15 @@ const SyncScreen = ({ onDone }) => {
           teams,
           fetchedAt: Date.now(),
         });
-        
+
         // Record the ritual seen
         await writeCache(LOADER_CACHE_KEY, { lastSeen: Date.now() });
 
-        setPercent(100);
         setTask('Sync Complete - Registry Updated.');
-        setTimeout(onDone, 800);
+        setIsDone(true);
 
+        // Brief delay for user to see 100%
+        setTimeout(onDone, 1200);
       } catch (err) {
         if (import.meta.env.DEV) {
           console.error('[SyncScreen] Ritual failed:', err);
@@ -146,7 +160,13 @@ const SyncScreen = ({ onDone }) => {
   }
 
   return (
-    <div className="sync-screen" role="progressbar" aria-valuenow={percent} aria-valuemin="0" aria-valuemax="100">
+    <div
+      className="sync-screen"
+      role="progressbar"
+      aria-valuenow={percent}
+      aria-valuemin="0"
+      aria-valuemax="100"
+    >
       <div className="sync-screen__header-ghost">
         <div className="sync-screen__header-logo">CRICKET SCOUTER</div>
         <div className="sync-screen__header-nav">
@@ -158,7 +178,9 @@ const SyncScreen = ({ onDone }) => {
       </div>
 
       <div className="sync-screen__coord">
-        SYS // L-09<br/>EST. 1984
+        SYS // L-09
+        <br />
+        EST. 1984
       </div>
 
       <div className="sync-screen__watermark" aria-hidden="true">
@@ -188,7 +210,9 @@ const SyncScreen = ({ onDone }) => {
             </div>
             <div className="sync-screen__meta-row">
               <span className="sync-screen__meta-label">Target Array</span>
-              <span className="sync-screen__meta-value sync-screen__meta-value--dim">Global_Registry_V2.4</span>
+              <span className="sync-screen__meta-value sync-screen__meta-value--dim">
+                Global_Registry_V2.4
+              </span>
             </div>
             <div className="sync-screen__meta-row">
               <span className="sync-screen__meta-label">Source Provider</span>
@@ -213,7 +237,9 @@ const SyncScreen = ({ onDone }) => {
       </div>
 
       <div className="sync-screen__fact-box">
-        <p className="sync-screen__fact-label">Scouter Insight // {currentFact.toString().padStart(3, '0')}</p>
+        <p className="sync-screen__fact-label">
+          Scouter Insight // {currentFact.toString().padStart(3, '0')}
+        </p>
         <p className="sync-screen__fact-text">"{CRICKET_FACTS[currentFact]}"</p>
       </div>
 
@@ -229,10 +255,7 @@ const SyncScreen = ({ onDone }) => {
           </div>
         </div>
         <div className="sync-screen__progress">
-          <div 
-            className="sync-screen__progress-bar" 
-            style={{ width: `${percent}%` }}
-          >
+          <div className="sync-screen__progress-bar" style={{ width: `${percent}%` }}>
             <div className="sync-screen__progress-glow"></div>
           </div>
         </div>
