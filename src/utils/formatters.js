@@ -9,7 +9,7 @@
  *   formatStyle(rawStyle)           — "right-hand-bat" → "Right Hand Bat"
  *   groupCareer(careerArray)        — aggregates the career array by format type
  *   slugify(name)                   — converts "Virat Kohli" to "virat-kohli"
- *   downloadJson(data, filename)    — triggers client-side JSON download
+
  *
  * All functions are pure — no side-effects, no imports from the store.
  */
@@ -194,21 +194,5 @@ export function slugify(name) {
   return name.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
 }
 
-/**
- * Triggers a client-side download of JSON data.
- *
- * @param {object} data - The object to export.
- * @param {string} filename - The name of the file (e.g. "player-123.json").
- */
-export function downloadJson(data, filename) {
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = filename;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  URL.revokeObjectURL(url);
-}
+
 
