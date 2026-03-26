@@ -26,7 +26,7 @@ export async function client(endpoint, options = {}, retryCount = 0) {
   }
 
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 60000); // 15s timeout
+  const timeoutId = setTimeout(() => controller.abort(), 60000); // 60s timeout
 
   // Inject token
   // Use a second argument to ensure it works for relative paths (proxy) or absolute URLs
@@ -71,7 +71,7 @@ export async function client(endpoint, options = {}, retryCount = 0) {
   } catch (error) {
     clearTimeout(timeoutId);
     if (error.name === 'AbortError') {
-      throw new ApiError('Request timed out after 15 seconds', 408, true);
+      throw new ApiError('Request timed out after 60 seconds', 408, true);
     }
     if (error instanceof ApiError) throw error;
     throw new ApiError(error.message, 500, true);
