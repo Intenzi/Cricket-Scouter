@@ -48,10 +48,24 @@ const PlayerHero = ({ player, country }) => {
         url: shareUrl,
       })
       .then(triggerCopyEffect)
-      .catch(console.error);
+      .catch((err) => {
+        // User cancelling the share sheet is caught here; we shouldn't show "Copied" in that case
+        if (err.name !== 'AbortError' && import.meta.env.DEV) {
+          console.error('[handleShare] Share failed:', err);
+        }
+      });
+    } else if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(shareUrl)
+        .then(triggerCopyEffect)
+        .catch((err) => {
+          if (import.meta.env.DEV) {
+            console.error('[handleShare] Clipboard copy failed:', err);
+          }
+        });
     } else {
-      navigator.clipboard.writeText(shareUrl);
-      triggerCopyEffect();
+      if (import.meta.env.DEV) {
+        console.warn('[handleShare] Sharing and Clipboard API are both unavailable.');
+      }
     }
   };
 
