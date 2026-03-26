@@ -1,5 +1,4 @@
 {
-  "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
     {
@@ -7,7 +6,11 @@
       "destination": "/api/proxy"
     },
     {
-      "source": "/(.*)",
+      "source": "/players",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/players/:path*",
       "destination": "/index.html"
     }
   ]
