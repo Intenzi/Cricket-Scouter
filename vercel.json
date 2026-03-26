@@ -1,15 +1,12 @@
 {
+  "trailingSlash": true,
   "rewrites": [
     {
       "source": "/api-proxy/:path*",
       "destination": "/api/proxy"
     },
     {
-      "source": "/players",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/players/:path*",
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ]
