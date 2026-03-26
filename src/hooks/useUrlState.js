@@ -26,7 +26,7 @@ import { useSearchParams } from 'react-router-dom';
 import { useCallback } from 'react';
 
 /** Keys that, when changed, should auto-reset pagination. */
-const FILTER_KEYS = new Set(['search', 'country', 'position']);
+const FILTER_KEYS = new Set(['search', 'country', 'position', 'tournament']);
 
 /**
  * Provides URL-persisted state for the players listing page.
