@@ -12,7 +12,6 @@ class ApiError extends Error {
   }
 }
 
-const TOKEN = import.meta.env.VITE_SPORTMONKS_TOKEN;
 // Use a local proxy in development to bypass CORS, otherwise use the direct URL
 const BASE_URL = '/api-proxy';
 
@@ -20,18 +19,12 @@ const BASE_URL = '/api-proxy';
  * Common fetch helper with token and timeout.
  */
 export async function client(endpoint, options = {}, retryCount = 0) {
-  // Guard for development
-  if (!TOKEN && import.meta.env.DEV) {
-    console.error('CRITICAL: VITE_SPORTMONKS_TOKEN is missing in .env');
-  }
-
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 60000); // 60s timeout
 
   // Inject token
   // Use a second argument to ensure it works for relative paths (proxy) or absolute URLs
   const url = new URL(`${BASE_URL}${endpoint}`, window.location.origin);
-  url.searchParams.append('api_token', TOKEN);
 
   try {
     const response = await fetch(url.toString(), {
@@ -49,7 +42,10 @@ export async function client(endpoint, options = {}, retryCount = 0) {
 
     // Auth 401
     if (response.status === 401) {
-      throw new ApiError('Authentication failed', 401, false);
+      const msg = import.meta.env.DEV
+        ? 'Authentication failed - check if SPORTMONKS_TOKEN is set in your .env'
+        : 'Authentication failed';
+      throw new ApiError(msg, 401, false);
     }
 
     // Retryable status codes (5xx, 408)
