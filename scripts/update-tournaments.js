@@ -9,7 +9,7 @@
  * Usage: node scripts/update-tournaments.js
  */
 
-require('dotenv').config();
+import 'dotenv/config';
 
 const TOKEN = process.env.VITE_SPORTMONKS_TOKEN;
 const API_URL = `https://cricket.sportmonks.com/api/v2.0/players?api_token=${TOKEN}&include=career`;
